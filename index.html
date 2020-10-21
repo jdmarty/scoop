@@ -16,10 +16,8 @@
                 <h1 class="title is-size-1">Let's Eat!</h1>
                 <div class="field">
                     <p class="control has-icons-right">
-                        <input class="input is-rounded" type="text" placeholder="What sounds good?">
-                        <span class="icon is-small is-right">
-                            <i class="fas fa-search"></i>
-                        </span>
+                        <input class="input is-rounded" id="search" type="text" placeholder="What sounds good?"> <!-- added search id-->
+                        <input class="button" id="searchButton" type="submit" value="Submit input">
                     </p>
                 </div>
             </div>
@@ -29,7 +27,7 @@
         <div class="container">
             <div class="columns">
                 <!-- Nutrition Section -->
-                <div class="column has-background-primary is-half">
+                <div class="column has-background-primary is-half" id="foodGoesHere"> <!-- food goes here ID added-->
                     <h1 class="title has-text-white">Nutrition</h1>
                     <ul>
                         <li class="is-size-3 has-text-white">Here is some stuff</li>
