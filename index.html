@@ -17,11 +17,18 @@
         <div class="hero-body">
             <div class="container">
                 <h1 class="title is-size-1">Let's Eat!</h1>
-                <div class="field">
-                    <p class="control has-icons-right">
-                        <input class="input is-rounded" id="search" type="text" placeholder="What sounds good?"> <!-- added search id-->
-                        <input class="button" id="searchButton" type="submit" value="Submit input">
-                    </p>
+                <div class="field has-addons">
+                    <div class="control">
+                        <div class="button is rounded" id="advancedSearch">
+                            <i class="fas fa-bars"></i>
+                        </div>
+                    </div>
+                    <div class="control is-expanded">
+                        <input class="input is-rounded" id="search" type="text" placeholder="What sounds good?"> <!-- added search id--> 
+                    </div>
+                    <div class="control">
+                        <input class="button is-rounded" id="searchButton" type="submit" value="Submit">
+                    </div>
                 </div>
             </div>
         </div>
