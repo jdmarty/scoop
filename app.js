@@ -41,7 +41,8 @@ var yelpQueryURL = "https://api.yelp.com/v3/businesses/"+yelpClientID;
 
 $.ajax({
   url: yelpQueryURL,
-  method: "GET"})
+  method: "GET",
+  headers: { Authorization: "Bearer "+apiKey }})
   .then(function(response) {
       console.log(queryURL);
       console.log(response);
