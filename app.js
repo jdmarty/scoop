@@ -6,7 +6,7 @@ console.log("rock and roll");
 
 
 function getSource(id) {
-let queryURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=233e29c645cf4eaca90809d7a4c85141&query="+id;
+let queryURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=233e29c645cf4eaca90809d7a4c85141&query="+id+ "&minCalories=100";
 
 $.ajax ({
     url: queryURL,
@@ -24,6 +24,9 @@ function createNutritionBlock(response){
         console.log(actualFoodImage);
         foodImageDiv.append(actualFoodImage);
         console.log(foodImageDiv)
+
+        var actualTitle = $("<h1>").text(response.results[0].title)
+        foodImageDiv.append(actualTitle);
         $("#foodGoesHere").html(foodImageDiv);
 }
 
