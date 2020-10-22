@@ -41,6 +41,8 @@ $(document).ready(function() {
     getSource(inputFood);
   });
 
+
+  //ADVANCED SEARCH --------------------------------------------------
   //Listener for hide button
   // $('#advancedSearchBox').hide()
   $("#advancedMenuToggle").on("click", function (e) {
@@ -79,10 +81,31 @@ $(document).ready(function() {
     console.log(advancedSearchObj)
   })
 
+  //function to parse the advance search object
+  function parseAdvancedSearch() {
+    var optionsString = ''
+    if (advancedSearchObj.maxCalories) optionsString += `&maxCalories=${advancedSearchObj.maxCalories}`;
+    if (advancedSearchObj.minProtein) optionsString += `&minProtein=${advancedSearchObj.minProtein}`;
+    if (advancedSearchObj.maxCarbs) optionsString += `&maxCarbs=${advancedSearchObj.maxCarbs}`;
+    if (advancedSearchObj.maxSugar) optionsString += `&maxSugar=${advancedSearchObj.maxSugar}`;
+    if (advancedSearchObj.diet) optionsString += `&diet=${advancedSearchObj.diet}`;
+    if (advancedSearchObj.allergies) {
+      var allergiesString = ''
+      for (let key in advancedSearchObj.allergies) {
+        if (advancedSearchObj.allergies[key]) allergiesString += key+','
+      }
+      allergiesString += ','
+      optionsString += `&intolerances=${allergiesString.split(',,')[0]}`;
+    }
+    console.log(optionsString)
+    return optionsString
+  }
+
   //test button for diet dropdown
   $('#testAS').on('click', function() {
 
   })
+  //------------------------------------------------------------------
 
 
 
