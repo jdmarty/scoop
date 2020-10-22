@@ -44,7 +44,7 @@ $(document).ready(function() {
 
   //ADVANCED SEARCH --------------------------------------------------
   //Listener for hide button
-  // $('#advancedSearchBox').hide()
+  $('#advancedSearchBox').hide()
   $("#advancedMenuToggle").on("click", function (e) {
     e.preventDefault();
     $("#advancedSearchBox").slideToggle();
