@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- jquery UI -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    
     <!-- Fontawesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
     <title>Scoop Project</title>
@@ -16,19 +19,168 @@
     <section class="hero is-primary is-bold">
         <div class="hero-body">
             <div class="container">
+                <!-- main search -->
                 <h1 class="title is-size-1">Let's Eat!</h1>
                 <div class="field has-addons">
                     <div class="control">
-                        <div class="button is rounded" id="advancedSearch">
+                        <div class="button is rounded" id="advancedMenuToggle">
                             <i class="fas fa-bars"></i>
                         </div>
                     </div>
                     <div class="control is-expanded">
-                        <input class="input is-rounded" id="search" type="text" placeholder="What sounds good?"> <!-- added search id--> 
+                        <input class="input is-rounded" id="search" type="text" placeholder="What sounds good?">
                     </div>
                     <div class="control">
                         <input class="button is-rounded" id="searchButton" type="submit" value="Submit">
                     </div>
+                </div>
+                <!-- advanced search -->
+                <div class="row" id="advancedSearchBox">
+                    <!-- First Row -->
+                    <div class="columns">
+                        <!-- Max Calories -->
+                        <div class="field has-addons column is-one-quarter">
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Max Calories</p>
+                                </div>
+                            </div>
+                            <div class="control is-expanded">
+                                <input class="input is-rounded" id="calRange" type="range" min="50" max="800">
+                            </div>
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p id="calDisplay">___</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Min Protein -->
+                        <div class="field has-addons column is-one-quarter">
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Protein (g)</p>
+                                </div>
+                            </div>
+                            <div class="control is-expanded">
+                                <input class="input is-rounded is-primary" id="minProtein" type="range" min="10" max="100">
+                            </div>
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p id="protDisplay">___</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Max Carbs -->
+                        <div class="field has-addons column is-one-quarter">
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Carbs (g)</p>
+                                </div>
+                            </div>
+                            <div class="control is-expanded">
+                                <input class="input is-rounded is-primary" id="maxCarbs" type="range" min="10" max="100">
+                            </div>
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p id="carbsDisplay">___</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Max Sugar -->
+                        <div class="field has-addons column is-one-quarter">
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Sugar (g)</p>
+                                </div>
+                            </div>
+                            <div class="control is-expanded">
+                                <input class="input is-rounded is-primary" id="maxSugar" type="range" min="0" max="100">
+                            </div>
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p id="sugarDisplay">___</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Second Row -->
+                    <div class="columns">
+                        <!-- Dietary Dropdown -->
+                        <div class="field has-addons column is-one-quarter">
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Diet</p>
+                                </div>
+                            </div>
+                            <div class="control is-expanded">
+                                <span class="select is-fullwidth">
+                                    <select>
+                                        <option selected>None</option>
+                                        <option>Gluten Free</option>
+                                        <option>Ketogenic</option>
+                                        <option>Vegetarian</option>
+                                        <option>Lacto-Vegetarian</option>
+                                        <option>Ovo-Vegetarian</option>
+                                        <option>Vegan</option>
+                                        <option>Pescaterian</option>
+                                        <option>Paleo</option>
+                                        <option>Primal</option>
+                                        <option>Whole30</option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Min Protein -->
+                        <div class="field has-addons column is-one-quarter">
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Protein (g)</p>
+                                </div>
+                            </div>
+                            <div class="control is-expanded">
+                                <input class="input is-rounded is-primary" id="minProtein" type="range" min="10" max="100">
+                            </div>
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p id="protDisplay">___</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Max Carbs -->
+                        <div class="field has-addons column is-one-quarter">
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Carbs (g)</p>
+                                </div>
+                            </div>
+                            <div class="control is-expanded">
+                                <input class="input is-rounded is-primary" id="maxCarbs" type="range" min="10" max="100">
+                            </div>
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p id="carbsDisplay">___</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Max Sugar -->
+                        <div class="field has-addons column is-one-quarter">
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Sugar (g)</p>
+                                </div>
+                            </div>
+                            <div class="control is-expanded">
+                                <input class="input is-rounded is-primary" id="maxSugar" type="range" min="0" max="100">
+                            </div>
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p id="sugarDisplay">___</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -295,9 +447,9 @@
                 </div>
             </div>
     </section>
-    <!-- hehe -->
 
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>
