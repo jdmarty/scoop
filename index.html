@@ -42,15 +42,15 @@
                         <div class="field has-addons column is-one-quarter">
                             <div class="control">
                                 <div class="button is-static">
-                                    <p>Max Calories</p>
+                                    <p>Calories</p>
                                 </div>
                             </div>
                             <div class="control is-expanded">
-                                <input class="input is-rounded" id="calRange" type="range" min="50" max="800">
+                                <input class="input is-rounded" id="calRange" type="range" min="50" max="800" data-slider="maxCalories">
                             </div>
                             <div class="control">
                                 <div class="button is-static">
-                                    <p id="calDisplay">___</p>
+                                    <p id="calDisplay" data-display="maxCalories">___</p>
                                 </div>
                             </div>
                         </div>
@@ -62,11 +62,11 @@
                                 </div>
                             </div>
                             <div class="control is-expanded">
-                                <input class="input is-rounded is-primary" id="minProtein" type="range" min="10" max="100">
+                                <input class="input is-rounded is-primary" id="minProtein" type="range" min="10" max="100" data-slider="minProtein">
                             </div>
                             <div class="control">
                                 <div class="button is-static">
-                                    <p id="protDisplay">___</p>
+                                    <p id="protDisplay" data-display='minProtein'>___</p>
                                 </div>
                             </div>
                         </div>
@@ -78,11 +78,11 @@
                                 </div>
                             </div>
                             <div class="control is-expanded">
-                                <input class="input is-rounded is-primary" id="maxCarbs" type="range" min="10" max="100">
+                                <input class="input is-rounded is-primary" id="maxCarbs" type="range" min="10" max="100" data-slider="maxCarbs">
                             </div>
                             <div class="control">
                                 <div class="button is-static">
-                                    <p id="carbsDisplay">___</p>
+                                    <p id="carbsDisplay" data-display="maxCarbs">___</p>
                                 </div>
                             </div>
                         </div>
@@ -94,11 +94,11 @@
                                 </div>
                             </div>
                             <div class="control is-expanded">
-                                <input class="input is-rounded is-primary" id="maxSugar" type="range" min="0" max="100">
+                                <input class="input is-rounded is-primary" id="maxSugar" type="range" min="0" max="100" data-slider="maxSugar">
                             </div>
                             <div class="control">
                                 <div class="button is-static">
-                                    <p id="sugarDisplay">___</p>
+                                    <p id="sugarDisplay" data-display="maxSugar">___</p>
                                 </div>
                             </div>
                         </div>
@@ -106,13 +106,14 @@
 
                     <!-- Second Row -->
                     <div class="columns m-0">
-                        <!-- Dietary Dropdown -->
+                        <!-- Dietary -->
                         <div class="field has-addons column is-one-quarter">
                             <div class="control">
                                 <div class="button is-static">
                                     <p>Diet</p>
                                 </div>
                             </div>
+                            <!-- Dietary Options -->
                             <div class="control is-expanded">
                                 <span class="select is-fullwidth">
                                     <select>
@@ -130,14 +131,18 @@
                                     </select>
                                 </span>
                             </div>
+                            <!-- End Dietary Options -->
                         </div>
+                        <!-- End Dietary -->
                         <!-- Allergies -->
                         <div class="field has-addons column">
+                            <!-- Allergies Label -->
                             <div class="control">
                                 <div class="button is-static">
                                     <p>Allergies</p>
                                 </div>
                             </div>
+                            <!-- Allergies Options -->
                             <div class="control is-expanded">
                                 <div class="field box pb-0 pt-1 is-grouped is-grouped-multiline">
                                     <p class="control">
@@ -208,11 +213,14 @@
                                     </p>
                                 </div>
                             </div>
+                            <!-- End Allergies Options -->
                         </div>
+                        <!-- End Allergies -->
                     </div>
                 </div>
-                </div>
+                <!-- end advanced Search -->
             </div>
+            <button id="testAS">Test</button>
         </div>
     </section>
     <section class="section">
