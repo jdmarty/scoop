@@ -42,7 +42,7 @@ $(document).ready(function() {
   });
 
   //Listener for hide button
-  $('#advancedSearchBox').hide()
+  // $('#advancedSearchBox').hide()
   $("#advancedMenuToggle").on("click", function (e) {
     e.preventDefault();
     $("#advancedSearchBox").slideToggle();
@@ -60,6 +60,29 @@ $(document).ready(function() {
       console.log(advancedSearchObj);
     });
 
+  //Listener for dietary dropdown
+  $('#dietarySelect').on('change', function(e) {
+    e.preventDefault();
+    advancedSearchObj.diet = $(e.currentTarget).val()
+    console.log(advancedSearchObj)
+  })
+
+  //Listener for checkbox
+  $('[type="checkbox"]').on('change', function(e) {
+    var targetAllergy = $(e.currentTarget).attr('data-allergy')
+    if (!advancedSearchObj.allergies) {
+      advancedSearchObj.allergies = {}
+      advancedSearchObj.allergies[targetAllergy] = e.currentTarget.checked
+    } else {
+      advancedSearchObj.allergies[targetAllergy] = e.currentTarget.checked;
+    }
+    console.log(advancedSearchObj)
+  })
+
+  //test button for diet dropdown
+  $('#testAS').on('click', function() {
+
+  })
 
 
 
