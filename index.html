@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- jquery UI -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    
     <!-- Fontawesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
     <title>Scoop Project</title>
@@ -16,14 +19,208 @@
     <section class="hero is-primary is-bold">
         <div class="hero-body">
             <div class="container">
+                <!-- main search -->
                 <h1 class="title is-size-1">Let's Eat!</h1>
-                <div class="field">
-                    <p class="control has-icons-right">
-                        <input class="input is-rounded" id="search" type="text" placeholder="What sounds good?"> <!-- added search id-->
-                        <input class="button" id="searchButton" type="submit" value="Submit input">
-                    </p>
+                <div class="field has-addons">
+                    <div class="control">
+                        <div class="button is rounded" id="advancedMenuToggle">
+                            <i class="fas fa-bars"></i>
+                        </div>
+                    </div>
+                    <div class="control is-expanded">
+                        <input class="input is-rounded" id="search" type="text" placeholder="What sounds good?">
+                    </div>
+                    <div class="control">
+                        <input class="button is-rounded" id="searchButton" type="submit" value="Submit">
+                    </div>
                 </div>
+                <!-- advanced search -->
+                <div id="advancedSearchBox">
+                    <!-- First Row -->
+                    <div class="columns m-0">
+                        <!-- Max Calories -->
+                        <div class="field has-addons column is-one-quarter">
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Calories</p>
+                                </div>
+                            </div>
+                            <div class="control is-expanded">
+                                <input class="input is-rounded" id="calRange" type="range" min="50" max="800" data-slider="maxCalories">
+                            </div>
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p id="calDisplay" data-display="maxCalories">___</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Min Protein -->
+                        <div class="field has-addons column is-one-quarter">
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Protein (g)</p>
+                                </div>
+                            </div>
+                            <div class="control is-expanded">
+                                <input class="input is-rounded is-primary" id="minProtein" type="range" min="10" max="100" data-slider="minProtein">
+                            </div>
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p id="protDisplay" data-display='minProtein'>___</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Max Carbs -->
+                        <div class="field has-addons column is-one-quarter">
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Carbs (g)</p>
+                                </div>
+                            </div>
+                            <div class="control is-expanded">
+                                <input class="input is-rounded is-primary" id="maxCarbs" type="range" min="10" max="100" data-slider="maxCarbs">
+                            </div>
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p id="carbsDisplay" data-display="maxCarbs">___</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Max Sugar -->
+                        <div class="field has-addons column is-one-quarter">
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Sugar (g)</p>
+                                </div>
+                            </div>
+                            <div class="control is-expanded">
+                                <input class="input is-rounded is-primary" id="maxSugar" type="range" min="0" max="100" data-slider="maxSugar">
+                            </div>
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p id="sugarDisplay" data-display="maxSugar">___</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Second Row -->
+                    <div class="columns m-0">
+                        <!-- Dietary -->
+                        <div class="field has-addons column is-one-quarter">
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Diet</p>
+                                </div>
+                            </div>
+                            <!-- Dietary Options -->
+                            <div class="control is-expanded">
+                                <span class="select is-fullwidth">
+                                    <select id="dietarySelect">
+                                        <option selected>None</option>
+                                        <option>Gluten Free</option>
+                                        <option>Ketogenic</option>
+                                        <option>Vegetarian</option>
+                                        <option>Lacto-Vegetarian</option>
+                                        <option>Ovo-Vegetarian</option>
+                                        <option>Vegan</option>
+                                        <option>Pescaterian</option>
+                                        <option>Paleo</option>
+                                        <option>Primal</option>
+                                        <option>Whole30</option>
+                                    </select>
+                                </span>
+                            </div>
+                            <!-- End Dietary Options -->
+                        </div>
+                        <!-- End Dietary -->
+                        <!-- Allergies -->
+                        <div class="field has-addons column">
+                            <!-- Allergies Label -->
+                            <div class="control">
+                                <div class="button is-static">
+                                    <p>Allergies</p>
+                                </div>
+                            </div>
+                            <!-- Allergies Options -->
+                            <div class="control is-expanded">
+                                <div class="field box pb-0 pt-1 is-grouped is-grouped-multiline">
+                                    <p class="control">
+                                        <label class="checkbox">
+                                        <input type="checkbox" data-allergy="dairy">
+                                        Dairy
+                                        </label>
+                                    </p>
+                                    <p class="control">
+                                        <label class="checkbox">
+                                        <input type="checkbox" data-allergy="peanut">
+                                        Peanut
+                                        </label>
+                                    </p>
+                                    <p class="control">
+                                        <label class="checkbox">
+                                        <input type="checkbox" data-allergy="soy">
+                                        Soy
+                                        </label>
+                                    </p>
+                                    <p class="control">
+                                        <label class="checkbox">
+                                        <input type="checkbox" data-allergy="egg">
+                                        Egg
+                                        </label>
+                                    </p>
+                                    <p class="control">
+                                        <label class="checkbox">
+                                        <input type="checkbox" data-allergy="seafood">
+                                        Seafood
+                                        </label>
+                                    </p>
+                                    <p class="control">
+                                        <label class="checkbox">
+                                        <input type="checkbox" data-allergy="shellfish">
+                                        Shellfish
+                                        </label>
+                                    </p>
+                                    <p class="control">
+                                        <label class="checkbox">
+                                        <input type="checkbox" data-allergy="sulfite">
+                                        Sulfite
+                                        </label>
+                                    </p>
+                                    <p class="control">
+                                        <label class="checkbox">
+                                        <input type="checkbox" data-allergy="gluten">
+                                        Gluten
+                                        </label>
+                                    </p>
+                                    <p class="control">
+                                        <label class="checkbox">
+                                        <input type="checkbox" data-allergy="sesame">
+                                        Sesame
+                                        </label>
+                                    </p>
+                                    <p class="control">
+                                        <label class="checkbox">
+                                        <input type="checkbox" data-allergy="tree nut">
+                                        Tree Nut
+                                        </label>
+                                    </p>
+                                    <p class="control">
+                                        <label class="checkbox">
+                                        <input type="checkbox" data-allergy="wheat">
+                                        Wheat
+                                        </label>
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- End Allergies Options -->
+                        </div>
+                        <!-- End Allergies -->
+                    </div>
+                </div>
+                <!-- end advanced Search -->
             </div>
+            <button id="testAS">Test</button>
         </div>
     </section>
     <section class="section">
@@ -288,9 +485,9 @@
                 </div>
             </div>
     </section>
-    <!-- hehe -->
 
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>
