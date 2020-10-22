@@ -43,9 +43,9 @@ $("#searchButton").on("click", function(event) {
 });
 
 // Yelp API call below:
-// var APIkey = "w6fgLGzcpy_01ZiH1W8Wdv69R_KtftS4uTpN-pt6VXrjQQeVISsP88yoeNd8gPFVWbDC2S4g-BRfKBJnQAYsFiTHlPE3HswwZTt7ZCHSSQ6UlupqIkn2TR9RE1OLX3Yx";
-// var yelpClientID = "5W6-7gKDvj8VLYIHT96lzQ"
-// var yelpQueryURL = "https://api.yelp.com/v3/businesses/"+yelpClientID;
+var APIkey = "w6fgLGzcpy_01ZiH1W8Wdv69R_KtftS4uTpN-pt6VXrjQQeVISsP88yoeNd8gPFVWbDC2S4g-BRfKBJnQAYsFiTHlPE3HswwZTt7ZCHSSQ6UlupqIkn2TR9RE1OLX3Yx";
+var yelpClientID = "5W6-7gKDvj8VLYIHT96lzQ"
+var yelpQueryURL = "https://api.yelp.com/v3/businesses/"+yelpClientID;
 
 // $.ajax({
 //   url: yelpQueryURL,
