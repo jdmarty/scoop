@@ -7,7 +7,7 @@ $(document).ready(function() {
   //Recipe Search
   function getRecipe(query) {
     var advancedOptions = parseAdvancedSearch()
-    let queryURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=815dd17c93024961a0ec520e355d0775&query="+query+advancedOptions;
+    let queryURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=233e29c645cf4eaca90809d7a4c85141&sort=healthiness&sortDirection=desc&query="+query+advancedOptions;
     $.ajax ({
         url: queryURL,
         method: "GET" })
@@ -86,14 +86,12 @@ $(document).ready(function() {
       var targetDisplay = $(e.currentTarget).attr("data-slider");
       $(`[data-display=${targetDisplay}]`).text(currentValue);
       advancedSearchObj[targetDisplay] = currentValue;
-      console.log(advancedSearchObj);
     });
 
   //Listener for dietary dropdown
   $('#dietarySelect').on('change', function(e) {
     e.preventDefault();
-    advancedSearchObj.diet = $(e.currentTarget).val()
-    console.log(advancedSearchObj)
+    advancedSearchObj.diet = $(e.currentTarget).val().toLowerCase()
   })
 
   //Listener for checkbox
@@ -105,7 +103,6 @@ $(document).ready(function() {
     } else {
       advancedSearchObj.allergies[targetAllergy] = e.currentTarget.checked;
     }
-    console.log(advancedSearchObj)
   })
 
   //function to parse the advance search object
@@ -142,16 +139,13 @@ $(document).ready(function() {
 // Yelp API call below:
 var APIkey = "w6fgLGzcpy_01ZiH1W8Wdv69R_KtftS4uTpN-pt6VXrjQQeVISsP88yoeNd8gPFVWbDC2S4g-BRfKBJnQAYsFiTHlPE3HswwZTt7ZCHSSQ6UlupqIkn2TR9RE1OLX3Yx";
 var yelpClientID = "5W6-7gKDvj8VLYIHT96lzQ"
-var yelpQueryURL = "https://api.yelp.com/v3/businesses/"+yelpClientID;
+var yelpQueryURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=pizza&location=Irvine";
 
-// $.ajax({
-//   url: yelpQueryURL,
-//   method: "GET",
-//   headers: { Authorization: "Bearer "+apiKey }})
-//   .then(function(response) {
-//       console.log(queryURL);
-//       console.log(response);
-//   });
-
-
+$.ajax({
+  url: yelpQueryURL,
+  method: "GET",
+  headers: { Authorization: "Bearer " + APIkey}})
+  .then(function(response) {
+      console.log(response);
+  });
 
