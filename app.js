@@ -7,7 +7,8 @@ $(document).ready(function() {
   //Recipe Search
   function getRecipe(query) {
     var advancedOptions = parseAdvancedSearch()
-    let queryURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=233e29c645cf4eaca90809d7a4c85141&query="+query+advancedOptions;
+    let queryURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=233e29c645cf4eaca90809d7a4c85141&sort=healthiness&sortDirection=desc&query="+query+advancedOptions;
+    console.log(queryURL)
     $.ajax ({
         url: queryURL,
         method: "GET" })
@@ -62,14 +63,12 @@ $(document).ready(function() {
       var targetDisplay = $(e.currentTarget).attr("data-slider");
       $(`[data-display=${targetDisplay}]`).text(currentValue);
       advancedSearchObj[targetDisplay] = currentValue;
-      console.log(advancedSearchObj);
     });
 
   //Listener for dietary dropdown
   $('#dietarySelect').on('change', function(e) {
     e.preventDefault();
-    advancedSearchObj.diet = $(e.currentTarget).val()
-    console.log(advancedSearchObj)
+    advancedSearchObj.diet = $(e.currentTarget).val().toLowerCase()
   })
 
   //Listener for checkbox
@@ -81,7 +80,6 @@ $(document).ready(function() {
     } else {
       advancedSearchObj.allergies[targetAllergy] = e.currentTarget.checked;
     }
-    console.log(advancedSearchObj)
   })
 
   //function to parse the advance search object
@@ -128,6 +126,3 @@ var yelpQueryURL = "https://api.yelp.com/v3/businesses/"+yelpClientID;
 //       console.log(queryURL);
 //       console.log(response);
 //   });
-
-
-
