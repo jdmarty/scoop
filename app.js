@@ -7,21 +7,14 @@ $(document).ready(function() {
   //Recipe Search
   function getRecipe(query) {
     var advancedOptions = parseAdvancedSearch()
-    let queryURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=233e29c645cf4eaca90809d7a4c85141&sort=healthiness&sortDirection=desc&query="+query+advancedOptions;
+    let queryURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=1679c56d3606492fbf0477a862a3177a&sort=healthiness&sortDirection=desc&addRecipeNutrition=true&query="+query+advancedOptions;
     $.ajax ({
         url: queryURL,
         method: "GET" })
       .then(function(response) {
-        var recipeId = response.results[0].id
-        var queryURLForRecipes = "https://api.spoonacular.com/recipes/"+recipeId+"/information?includeNutrition=true&apiKey=815dd17c93024961a0ec520e355d0775"
-        $.ajax({
-          url: queryURLForRecipes,
-          method: "GET"
-        }).then(function(response) {
-          nutritionInformation = response
-          console.log(nutritionInformation)
-          createNutritionBlock(response);
-      })
+        console.log(response)
+        nutritionInformation = response.results[0]
+        createNutritionBlock(nutritionInformation);
     })
   }
 
@@ -52,11 +45,6 @@ $(document).ready(function() {
     $("#foodGoesHere").append(actualProtein);    
   }
   
-  //response.nutrition.nutrients.find(function(el){
-  //  return el.title==="Calories";
- // })
-
-
   
   //Search button listener
   $("#searchButton").on("click", function(event) {
