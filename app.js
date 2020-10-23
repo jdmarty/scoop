@@ -59,7 +59,7 @@ $(document).ready(function() {
 
   //ADVANCED SEARCH --------------------------------------------------
   //Listener for hide button
-  $('#advancedSearchBox').hide()
+  // $('#advancedSearchBox').hide()
   $("#advancedMenuToggle").on("click", function (e) {
     e.preventDefault();
     $("#advancedSearchBox").slideToggle();
@@ -85,12 +85,8 @@ $(document).ready(function() {
   //Listener for checkbox
   $('[type="checkbox"]').on('change', function(e) {
     var targetAllergy = $(e.currentTarget).attr('data-allergy')
-    if (!advancedSearchObj.allergies) {
-      advancedSearchObj.allergies = {}
-      advancedSearchObj.allergies[targetAllergy] = e.currentTarget.checked
-    } else {
-      advancedSearchObj.allergies[targetAllergy] = e.currentTarget.checked;
-    }
+    if (!advancedSearchObj.allergies) advancedSearchObj.allergies = {}
+    advancedSearchObj.allergies[targetAllergy] = e.currentTarget.checked;
   })
 
   //function to parse the advance search object
@@ -109,9 +105,10 @@ $(document).ready(function() {
       allergiesString += ','
       optionsString += `&intolerances=${allergiesString.split(',,')[0]}`;
     }
-    console.log(optionsString)
     return optionsString
   }
+
+  //function
 
   //test button
   $('#testAS').on('click', function() {
