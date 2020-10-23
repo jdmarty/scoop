@@ -1,45 +1,48 @@
 $(document).ready(function() {
-  //-----------------------------------------------------------------
+  //=======================================================
+  //globals
   var advancedSearchObj = {};
+  var nutritionInformation
 
-  function getSource(id) {
-    let queryURL =
-      "https://api.spoonacular.com/recipes/complexSearch?apiKey=233e29c645cf4eaca90809d7a4c85141&query=" +
-      id +
-      "&minCalories=100";
-
-    $.ajax({
-      url: queryURL,
-      method: "GET",
-    }).then(function (response) {
-      console.log(response);
-      // JSON.stringify(response)
-      createNutritionBlock(response);
-    });
+  //Recipe Search
+  function getRecipe(query) {
+    var advancedOptions = parseAdvancedSearch()
+    let queryURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=233e29c645cf4eaca90809d7a4c85141&query="+query+advancedOptions;
+    $.ajax ({
+        url: queryURL,
+        method: "GET" })
+      .then(function(response) {
+        var recipeId = response.results[0].id
+        var queryURLForRecipes = "https://api.spoonacular.com/recipes/"+recipeId+"/information?includeNutrition=true&apiKey=233e29c645cf4eaca90809d7a4c85141"
+        $.ajax({
+          url: queryURLForRecipes,
+          method: "GET"
+        }).then(function(response) {
+          nutritionInformation = response
+          console.log(nutritionInformation)
+      })
+    })
   }
 
+  
   //create function to write nutrition block and call write nutrition function in ajax
-  function createNutritionBlock(response) {
+  function createNutritionBlock(nutritionInformation){
     var foodImageDiv = $("<div class='food'>");
     var actualFoodImage = $("<img>").attr("src", response.results[0].image);
-    console.log(actualFoodImage);
     foodImageDiv.append(actualFoodImage);
-    console.log(foodImageDiv);
-
-    var actualTitle = $("<h1>").text(response.results[0].title);
-    foodImageDiv.append(actualTitle);
     $("#foodGoesHere").html(foodImageDiv);
   }
-
-  $("#searchButton").on("click", function (event) {
-    // Preventing the button from trying to submit the form
-    event.preventDefault();
-    // Storing the food name
-    var inputFood = $("#search").val().trim();
-
-    // Running the food function(passing in the food as an argument)
-    getSource(inputFood);
-  });
+  
+  
+  //Search button listener
+  $("#searchButton").on("click", function(event) {
+      // Preventing the button from trying to submit the form
+      event.preventDefault();
+      // Storing the food name
+      var inputFood = $("#search").val().trim();
+      // Running the food function(passing in the food as an argument)
+      getRecipe(inputFood);
+    });
 
 
   //ADVANCED SEARCH --------------------------------------------------
@@ -101,7 +104,7 @@ $(document).ready(function() {
     return optionsString
   }
 
-  //test button for diet dropdown
+  //test button
   $('#testAS').on('click', function() {
 
   })
@@ -109,7 +112,7 @@ $(document).ready(function() {
 
 
 
-//-----------------------------------------------------------------------
+//=========================================================================
 });
 
 // Yelp API call below:
