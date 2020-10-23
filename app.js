@@ -8,32 +8,55 @@ $(document).ready(function() {
   function getRecipe(query) {
     var advancedOptions = parseAdvancedSearch()
     let queryURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=233e29c645cf4eaca90809d7a4c85141&sort=healthiness&sortDirection=desc&query="+query+advancedOptions;
-    console.log(queryURL)
     $.ajax ({
         url: queryURL,
         method: "GET" })
       .then(function(response) {
         var recipeId = response.results[0].id
-        var queryURLForRecipes = "https://api.spoonacular.com/recipes/"+recipeId+"/information?includeNutrition=true&apiKey=233e29c645cf4eaca90809d7a4c85141"
+        var queryURLForRecipes = "https://api.spoonacular.com/recipes/"+recipeId+"/information?includeNutrition=true&apiKey=815dd17c93024961a0ec520e355d0775"
         $.ajax({
           url: queryURLForRecipes,
           method: "GET"
         }).then(function(response) {
           nutritionInformation = response
           console.log(nutritionInformation)
+          createNutritionBlock(response);
       })
     })
   }
 
   
   //create function to write nutrition block and call write nutrition function in ajax
-  function createNutritionBlock(nutritionInformation){
+  function createNutritionBlock(response){
+    var actualTitle = $("<h1 class='title has-text-white'>").text(response.title)
+    $("#foodGoesHere").append(actualTitle);
+
     var foodImageDiv = $("<div class='food'>");
-    var actualFoodImage = $("<img>").attr("src", response.results[0].image);
+    var actualFoodImage = $("<img>").attr("src", response.image);
     foodImageDiv.append(actualFoodImage);
-    $("#foodGoesHere").html(foodImageDiv);
+    $("#foodGoesHere").append(foodImageDiv);
+
+    var actualCalories = $("<h1 class='subtitle has-text-white'>").text("Calories: " + response.nutrition.nutrients[0].amount + "cal")
+    $("#foodGoesHere").append(actualCalories);
+
+    var actualFat = $("<h1 class='subtitle has-text-white'>").text("Fat: " + response.nutrition.nutrients[1].amount + "g")
+    $("#foodGoesHere").append(actualFat);
+
+    var actualCarbs = $("<h1 class='subtitle has-text-white'>").text("Carbs: " + response.nutrition.nutrients[3].amount + "g")
+    $("#foodGoesHere").append(actualCarbs);
+
+    var actualSugar = $("<h1 class='subtitle has-text-white'>").text("Sugar: " + response.nutrition.nutrients[5].amount + "g")
+    $("#foodGoesHere").append(actualSugar);
+
+    var actualProtein = $("<h1 class='subtitle has-text-white'>").text("Protein: " + response.nutrition.nutrients[9].amount + "g")
+    $("#foodGoesHere").append(actualProtein);    
   }
   
+  //response.nutrition.nutrients.find(function(el){
+  //  return el.title==="Calories";
+ // })
+
+
   
   //Search button listener
   $("#searchButton").on("click", function(event) {
