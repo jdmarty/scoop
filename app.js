@@ -25,6 +25,7 @@ $(document).ready(function() {
   
   //create function to write nutrition block and call write nutrition function in ajax
   function createNutritionBlock(response){
+    if (response) $('#foodGoesHere').empty()
     var actualTitle = $("<h1 class='title has-text-white'>").text(response.title)
     $("#foodGoesHere").append(actualTitle);
 
@@ -114,7 +115,6 @@ $(document).ready(function() {
   //function to reset advanced search options
   function resetAS() {
     $('input[type="range"]').val('');
-    $("#dietarySelect").val('None')
     $('[type="checkbox"]').attr('checked', false);
   }
   
