@@ -5,6 +5,7 @@ $(document).ready(function () {
   if (!advancedSearchObj) advancedSearchObj = {};
   var searchResults;
   var nutritionInformation;
+  var yelpResults
 
   //intialize functions
   setAdvancedSearch();
@@ -241,6 +242,7 @@ $(document).ready(function () {
       headers: { Authorization: "Bearer " + APIkey },
     }).then(function (response) {
       console.log(response);
+      yelpResults = response
     });
   }
 
