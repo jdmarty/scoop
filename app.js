@@ -84,6 +84,7 @@ $(document).ready(function() {
         })
       $("#foodGoesHere").append(newFoodButton)
     });
+    if (searchResults.length === 0) $("#foodGoesHere").append('<h1 class="subtitle has-text-white">Oops! No results found</h1>')
   }
 
   //Search button listener
