@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
   //=======================================================
   //globals
   var advancedSearchObj = JSON.parse(localStorage.getItem("advancedSearch"));
@@ -75,16 +75,20 @@ $(document).ready(function() {
       .empty()
       .append('<h1 class="title has-text-white">Search Results</h1>');
     searchResults.forEach((el, index) => {
-      var newFoodButton = $('<button>')
-        .addClass('button m-2')
-        .attr('data-index', index)
+      var newFoodButton = $("<button>")
+        .addClass("button m-2")
+        .attr("data-index", index)
         .text(el.title)
-        .on('click', function() {
-          createNutritionBlock(searchResults[$(this).attr('data-index')])
-        })
-      $("#foodGoesHere").append(newFoodButton)
+        .on("click", function () {
+          createNutritionBlock(searchResults[$(this).attr("data-index")]);
+          callYelp($(this).text());
+        });
+      $("#foodGoesHere").append(newFoodButton);
     });
-    if (searchResults.length === 0) $("#foodGoesHere").append('<h1 class="subtitle has-text-white">Oops! No results found</h1>')
+    if (searchResults.length === 0)
+      $("#foodGoesHere").append(
+        '<h1 class="subtitle has-text-white">Oops! No results found</h1>'
+      );
   }
 
   //Search button listener
@@ -224,19 +228,21 @@ $(document).ready(function() {
 
   //------------------------------------------------------------------
 
+  function callYelp(term) {
+    var APIkey =
+      "Zc1zDKlQCxvJizw2y9oacMLa-ZU3dxlgJXxJsLDW3gR_zIdEa_7s1ffPqODwIt2tIS-YcIwPRSjzqx380E0GwCc90WrQJ8yvF-M52zNKSj20fUEPycHfNuGxZNI5X3Yx";
+    var yelpQueryURL = `https://proxy-for-scoop.herokuapp.com/http://api.yelp.com/v3/businesses/search?term=${term}&location=Irvine`;
+
+    $.ajax({
+      url: yelpQueryURL,
+      method: "GET",
+      headers: { Authorization: "Bearer " + APIkey },
+    }).then(function (response) {
+      console.log(response);
+    });
+  }
+
   //=========================================================================
 });
 
 // Yelp API call below:
-// var APIkey = "w6fgLGzcpy_01ZiH1W8Wdv69R_KtftS4uTpN-pt6VXrjQQeVISsP88yoeNd8gPFVWbDC2S4g-BRfKBJnQAYsFiTHlPE3HswwZTt7ZCHSSQ6UlupqIkn2TR9RE1OLX3Yx";
-// var yelpClientID = "5W6-7gKDvj8VLYIHT96lzQ"
-// var yelpQueryURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=pizza&location=Irvine";
-
-// $.ajax({
-//   url: yelpQueryURL,
-//   method: "GET",
-//   headers: { Authorization: "Bearer " + APIkey}})
-//   .then(function(response) {
-//       console.log(response);
-//   });
-
