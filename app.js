@@ -97,6 +97,8 @@ $(document).ready(function () {
     event.preventDefault();
     // Storing the food name
     var inputFood = $("#search").val().trim();
+    //when button is pressed main will appear
+    $("#main").css({"display":"block"}); 
     // Running the food function(passing in the food as an argument)
     getRecipe(inputFood);
   });
