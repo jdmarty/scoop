@@ -67,7 +67,12 @@ $(document).ready(function () {
     var actualProtein = $("<h1 class='subtitle has-text-white'>").text(
       "Protein: " + response.nutrition.nutrients[9].amount + "g"
     );
+
+    var actualRecipe = $('<a>').attr("href", response.sourceUrl[0]).text(`{response.sourceUrl}`)
+    console.log(actualRecipe);
+   
     $("#foodGoesHere").append(actualProtein);
+    $('#foodGoesHere').append(actualRecipe);
   }
 
   //function to create buttons after search
@@ -243,6 +248,8 @@ $(document).ready(function () {
     }).then(function (response) {
       console.log(response);
       yelpResults = response
+      var yelpBizDiv = $('<div class="business">')
+      var yelpBiz = $('#yelpBiz').append(response.businesses.name)
     });
   }
 
