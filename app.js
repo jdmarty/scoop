@@ -5,7 +5,7 @@ $(document).ready(function () {
   if (!advancedSearchObj) advancedSearchObj = {};
   var spoonSearchResults;
   var yelpResults;
-  var currentYelpSearchTerm = 'Pizza'
+  var currentYelpSearchTerm = 'Noodles'
   var currentYelpSearchLocation = JSON.parse(localStorage.getItem('lastYelpLocation'))  
   if (!currentYelpSearchLocation) currentYelpSearchLocation = 'Irvine'     
 
@@ -255,6 +255,13 @@ $(document).ready(function () {
     for (let i=0; i < 10; i++) {
       var thisBusiness = yelpResults.businesses[i];
       var newCard = $("<div>").addClass('card my-2');
+      //image
+        var newCardImage = $('<div>').addClass('card-image');
+          var newCardImageFigure = $('<figure>').addClass('image is-96x96 is-pulled-right m-2')
+           var newCardImageActual = $('<img>').attr('src', thisBusiness.image_url).attr('alt', thisBusiness.name+'picture')
+          newCardImageFigure.append(newCardImageActual);
+        newCardImage.append(newCardImageFigure)
+      newCard.append(newCardImage)
       //header
         var newCardHeader = $('<header>').addClass('class-header');
           var newHeaderTitle = $('<p>').addClass('card-header-title').text(thisBusiness.name);
@@ -271,7 +278,7 @@ $(document).ready(function () {
       newCard.append(newCardBody);
       //footer
         var newCardFooter = $('<div>').addClass('card-footer');
-          var newYelpLink = $('<a target="_blank">').addClass('card-footer-item').attr('href', thisBusiness.url).text('Check it out on Yelp');
+          var newYelpLink = $('<a target="_blank">').addClass('card-footer-item').attr('href', thisBusiness.url).text('Check it out on Yelp!');
         newCardFooter.append(newYelpLink);
       newCard.append(newCardFooter);
       $('#yelpSection').append(newCard)
