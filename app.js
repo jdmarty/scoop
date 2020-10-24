@@ -7,7 +7,7 @@ $(document).ready(function() {
   var nutritionInformation;
 
   //intialize functions
-  setAdvancedSearch()
+  setAdvancedSearch();
 
   //Recipe Search
   function getRecipe(query) {
@@ -25,7 +25,8 @@ $(document).ready(function() {
       console.log(searchResults);
       nutritionInformation = response.results[0];
       console.log(nutritionInformation);
-      createNutritionBlock(nutritionInformation);
+      createSearchButtons();
+      // createNutritionBlock(nutritionInformation);
     });
   }
 
@@ -68,6 +69,23 @@ $(document).ready(function() {
     $("#foodGoesHere").append(actualProtein);
   }
 
+  //function to create buttons after search
+  function createSearchButtons() {
+    $("#foodGoesHere")
+      .empty()
+      .append('<h1 class="title has-text-white">Search Results</h1>');
+    searchResults.forEach((el, index) => {
+      var newFoodButton = $('<button>')
+        .addClass('button m-2')
+        .attr('data-index', index)
+        .text(el.title)
+        .on('click', function() {
+          createNutritionBlock(searchResults[$(this).attr('data-index')])
+        })
+      $("#foodGoesHere").append(newFoodButton)
+    });
+  }
+
   //Search button listener
   $("#searchButton").on("click", function (event) {
     // Preventing the button from trying to submit the form
@@ -79,21 +97,21 @@ $(document).ready(function() {
   });
 
   //ADVANCED SEARCH --------------------------------------------------
-  // $('#advancedSearchBox').hide()
+  $("#advancedSearchBox").hide();
 
   //function to parse the object in storage to display the advanced search
   function setAdvancedSearch() {
     //set slider displays
-    $('#calRange').val(advancedSearchObj.maxCalories)
-    $('#calDisplay').text(advancedSearchObj.maxCalories)
+    $("#calRange").val(advancedSearchObj.maxCalories);
+    $("#calDisplay").text(advancedSearchObj.maxCalories);
     $("#protRange").val(advancedSearchObj.maxProtein);
     $("#protDisplay").text(advancedSearchObj.maxProtein);
-    $('#carbsRange').val(advancedSearchObj.maxCarbs);
-    $('#carbsDisplay').text(advancedSearchObj.maxCarbs);
-    $('#sugarRange').val(advancedSearchObj.maxSugar);
-    $('#sugarDisplay').text(advancedSearchObj.maxSugar);
+    $("#carbsRange").val(advancedSearchObj.maxCarbs);
+    $("#carbsDisplay").text(advancedSearchObj.maxCarbs);
+    $("#sugarRange").val(advancedSearchObj.maxSugar);
+    $("#sugarDisplay").text(advancedSearchObj.maxSugar);
     //set diet display
-    $('#dietarySelect').val(advancedSearchObj.diet || 'None');
+    $("#dietarySelect").val(advancedSearchObj.diet || "None");
     //loop through all checkboxes
     $('[type="checkbox"]').each((el) => {
       //find the allergy associated with this checkbox
@@ -184,8 +202,25 @@ $(document).ready(function() {
 
   //test button
   $("#testAS").on("click", function () {
-    resetAS();
+    $("#foodGoesHere")
+      .empty()
+      .append('<h1 class="title has-text-white">Search Results</h1>');
+    var array = [
+      "item1",
+      "item 2",
+      "item 3",
+      "item 2",
+      "item 3",
+      "item 2",
+      "item 3",
+      "item 2",
+      "item 3",
+    ];
+    array.forEach((el) => {
+      $("#foodGoesHere").append(`<button class="button m-2">${el}</button>`);
+    });
   });
+
   //------------------------------------------------------------------
 
   //=========================================================================
