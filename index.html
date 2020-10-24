@@ -164,7 +164,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Min Protein -->
+                        <!-- Max Protein -->
                         <div class="field has-addons column is-one-quarter">
                             <div class="control">
                                 <div class="button is-static">
@@ -172,11 +172,11 @@
                                 </div>
                             </div>
                             <div class="control is-expanded">
-                                <input class="input is-rounded is-primary" id="minProtein" type="range" min="10" max="100" data-slider="minProtein">
+                                <input class="input is-rounded is-primary" id="protRange" type="range" min="10" max="100" data-slider="maxProtein">
                             </div>
                             <div class="control">
                                 <div class="button is-static">
-                                    <p id="protDisplay" data-display='minProtein'>___</p>
+                                    <p id="protDisplay" data-display='maxProtein'>___</p>
                                 </div>
                             </div>
                         </div>
@@ -188,7 +188,7 @@
                                 </div>
                             </div>
                             <div class="control is-expanded">
-                                <input class="input is-rounded is-primary" id="maxCarbs" type="range" min="10" max="100" data-slider="maxCarbs">
+                                <input class="input is-rounded is-primary" id="carbsRange" type="range" min="10" max="100" data-slider="maxCarbs">
                             </div>
                             <div class="control">
                                 <div class="button is-static">
@@ -204,7 +204,7 @@
                                 </div>
                             </div>
                             <div class="control is-expanded">
-                                <input class="input is-rounded is-primary" id="maxSugar" type="range" min="0" max="100" data-slider="maxSugar">
+                                <input class="input is-rounded is-primary" id="sugarRange" type="range" min="0" max="100" data-slider="maxSugar">
                             </div>
                             <div class="control">
                                 <div class="button is-static">
@@ -213,6 +213,7 @@
                             </div>
                         </div>
                     </div>
+                    <button class="button is-danger mx-3 my-2" id="resetAS">Reset Advanced Search</button>
                 <!-- end advanced Search -->
             </div>
             <button id="testAS">Test</button>
