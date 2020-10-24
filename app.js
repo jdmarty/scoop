@@ -257,7 +257,7 @@ $(document).ready(function () {
       var newCard = $("<div>").addClass('card my-2');
       //image
         var newCardImage = $('<div>').addClass('card-image');
-          var newCardImageFigure = $('<figure>').addClass('image is-4by3 m-2')
+          var newCardImageFigure = $('<figure>').addClass('image is-5by3 m-2')
            var newCardImageActual = $('<img>').attr('src', thisBusiness.image_url).attr('alt', thisBusiness.name+'picture')
           newCardImageFigure.append(newCardImageActual);
         newCardImage.append(newCardImageFigure)
@@ -268,12 +268,13 @@ $(document).ready(function () {
         newCardHeader.append(newHeaderTitle)
       newCard.append(newCardHeader)  
       //body
-        var newCardBody = $('<div>').addClass('card-content');
+        var newCardBody = $('<div>').addClass('card-content pt-0');
           var newCardContent = $('<div>').addClass('content');
-            var newPrice = $('<p>').text('Price: '+thisBusiness.price);
-            var newRating = $('<p>').text('Rating: '+thisBusiness.rating);
+            var newRating = $('<span>').text('Rating: '+thisBusiness.rating).addClass('mr-3')
+            var newPrice = $('<span>').text('Price: '+thisBusiness.price);
             var newAddress = $('<p>').text(thisBusiness.location.display_address.join(' '));
-          newCardContent.append(newPrice, newRating, newAddress);
+            var newDelivery = $('<p>').text(`Order Options: ${thisBusiness.transactions.join(', ')}`)
+          newCardContent.append(newRating, newPrice, newAddress, newDelivery);
         newCardBody.append(newCardContent);
       newCard.append(newCardBody);
       //footer
