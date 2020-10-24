@@ -257,7 +257,7 @@ $(document).ready(function () {
       var newCard = $("<div>").addClass('card my-2');
       //image
         var newCardImage = $('<div>').addClass('card-image');
-          var newCardImageFigure = $('<figure>').addClass('image is-96x96 is-pulled-right m-2')
+          var newCardImageFigure = $('<figure>').addClass('image is-4by3 m-2')
            var newCardImageActual = $('<img>').attr('src', thisBusiness.image_url).attr('alt', thisBusiness.name+'picture')
           newCardImageFigure.append(newCardImageActual);
         newCardImage.append(newCardImageFigure)
