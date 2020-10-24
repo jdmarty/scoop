@@ -219,7 +219,7 @@
             <button id="testAS">Test</button>
         </div>
     </section>
-    <section style= "display:none" class="section" id="main"> <!--added initial style when page first loads-->
+    <section style= "display:nne" class="section" id="main"> <!--added initial style when page first loads-->
         <div class="container">
             <div class="columns">
                 <!-- Nutrition Section -->
@@ -227,7 +227,20 @@
                 </div>
                 <!-- Yelp Section -->
                 <div class="column has-background-danger is-half" id="yelpSection">
-                    <h1 class="title has-text-white">Yelp Results</h1>
+                    <h1 class="subtitle my-1 has-text-white">Find food near:</h1>
+                    <div class="field has-addons">
+                        <div class="control">
+                            <div class="button is-static">
+                                <i class="fab fa-yelp"></i>
+                            </div>
+                        </div>
+                        <div class="control is-expanded">
+                            <input class="input is-rounded" id="yelpLocation" type="text" placeholder="Search a city or zipcode">
+                        </div>
+                        <div class="control">
+                            <input class="button is-rounded" id="yelpSearch" type="submit" value="Search">
+                        </div>
+                    </div>
                 </div>
             </div>
     </section>
