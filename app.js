@@ -243,7 +243,39 @@ $(document).ready(function () {
     }).then(function (response) {
       console.log(response);
       yelpResults = response
+      buildYelpCards()
     });
+  }
+
+  function buildYelpCards() {
+    $('#yelpSection').empty().append('<h1 class="title has-text-white">Yelp Results</h1>')
+    for (let i=0; i < 10; i++) {
+      var thisBusiness = yelpResults.businesses[i];
+      var newCard = $("<div>").addClass('card my-2');
+      //header
+        var newCardHeader = $('<header>').addClass('class-header');
+          var newHeaderTitle = $('<p>').addClass('card-header-title').text(thisBusiness.name);
+        newCardHeader.append(newHeaderTitle)
+      newCard.append(newCardHeader)  
+      //body
+        var newCardBody = $('<div>').addClass('card-content');
+          var newCardContent = $('<div>').addClass('content');
+            var newPrice = $('<p>').text('Price: '+thisBusiness.price);
+            var newRating = $('<p>').text('Rating: '+thisBusiness.rating);
+            var newAddress = $('<p>').text(thisBusiness.location.display_address.join(' '));
+            // var newIsOpen = $('<p>').text('Open'thisBusiness.is_closed);
+          newCardContent.append(newPrice, newRating, newAddress);
+        newCardBody.append(newCardContent);
+      newCard.append(newCardBody);
+      //footer
+        var newCardFooter = $('<div>').addClass('card-footer');
+          var newYelpLink = $('<a>').addClass('card-footer-item').attr('href', thisBusiness.url).text('Check it out on Yelp');
+        newCardFooter.append(newYelpLink);
+      newCard.append(newCardFooter);
+      
+      
+      $('#yelpSection').append(newCard)
+    }
   }
 
   //=========================================================================
