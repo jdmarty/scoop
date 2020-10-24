@@ -63,7 +63,7 @@ $(document).ready(function() {
 
 
   //ADVANCED SEARCH --------------------------------------------------
-  //Listener for hide button
+  // Listener for hide button
   // $('#advancedSearchBox').hide()
   $("#advancedMenuToggle").on("click", function (e) {
     e.preventDefault();
@@ -78,6 +78,7 @@ $(document).ready(function() {
       var targetDisplay = $(e.currentTarget).attr("data-slider");
       $(`[data-display=${targetDisplay}]`).text(currentValue);
       advancedSearchObj[targetDisplay] = currentValue;
+      console.log(advancedSearchObj)
     });
 
   //Listener for dietary dropdown
@@ -115,8 +116,18 @@ $(document).ready(function() {
   //function to reset advanced search options
   function resetAS() {
     $('input[type="range"]').val('');
-    $('[type="checkbox"]').attr('checked', false);
+    $("[data-display]").each(el => $("[data-display]")[el].textContent = '___');
+    $("#dietarySelect").val('None')
+    $('[type="checkbox"]').each((el) => {
+      if ($('[type="checkbox"]')[el].checked === true) $($('[type="checkbox"]')[el]).trigger('click')
+    });
+    advancedSearchObj = {}
+    console.log(advancedSearchObj)
   }
+
+  $('#resetAS').on('click', function() {
+
+  })
   
 
   //test button
