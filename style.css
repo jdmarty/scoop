@@ -1,3 +1,11 @@
 .asLabel {
     width: 70px;
 }
+
+.backgroundImg {
+    background-image: url("images/noodles.jpg");
+    display: initial;
+    position: absolute;
+    background-position: center;
+    bottom: 0px;
+}
