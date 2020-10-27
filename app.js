@@ -1,3 +1,5 @@
+import {testResponse} from "./ajax.js"
+
 $(document).ready(function () {
   //=======================================================
   //globals
@@ -27,6 +29,7 @@ $(document).ready(function () {
       url: queryURL,
       method: "GET",
     }).then(function (response) {
+      console.log(queryURL)
       //save the search results and create search buttons
       spoonSearchResults = response.results;
       createSearchButtons();
@@ -36,51 +39,62 @@ $(document).ready(function () {
   //create function to write nutrition block and call write nutrition function in ajax
   function createNutritionBlock(response) {
     if (response) $("#foodGoesHere").empty();
-    var actualTitle = $("<h1 class='title has-text-white actualTitles'>").text(
+    var actualTitle = $("<h1 class='title has-text-white actualTitles m-0'>").text(
       response.title
     );
     $("#foodGoesHere").append(actualTitle);
 
-    var foodImageDiv = $("<div class='food'>");
-    var actualFoodImage = $("<img>").attr("src", response.image);
-    foodImageDiv.append(actualFoodImage);
-    $("#foodGoesHere").append(foodImageDiv);
-
-    var actualCalories = $("<h1 class='subtitle has-text-white'>").text(
-      "Calories: " + response.nutrition.nutrients[0].amount + "cal"
-    );
-    $("#foodGoesHere").append(actualCalories);
-
-    var actualFat = $("<h1 class='subtitle has-text-white'>").text(
-      "Fat: " + response.nutrition.nutrients[1].amount + "g"
-    );
-    $("#foodGoesHere").append(actualFat);
-
-    var actualCarbs = $("<h1 class='subtitle has-text-white'>").text(
-      "Carbs: " + response.nutrition.nutrients[3].amount + "g"
-    );
-    $("#foodGoesHere").append(actualCarbs);
-
-    var actualSugar = $("<h1 class='subtitle has-text-white'>").text(
-      "Sugar: " + response.nutrition.nutrients[5].amount + "g"
-    );
-    $("#foodGoesHere").append(actualSugar);
-
-    var actualProtein = $("<h1 class='subtitle has-text-white'>").text(
-      "Protein: " + response.nutrition.nutrients[9].amount + "g"
-    );
-
-    var actualRecipe = $('<a target="_blank">').attr("href", response.sourceUrl).text('View Recipe').addClass('button')
-    console.log(actualRecipe);
-   
-    $("#foodGoesHere").append(actualProtein);
-    $('#foodGoesHere').append(actualRecipe);
+    var newCard = $("<div>").addClass('card my-2');
+      //image
+        var newCardImage = $('<div>').addClass('card-image');
+          var newCardImageFigure = $('<figure>').addClass('image is-5by3 m-2')
+           var newCardImageActual = $('<img>').attr('src', response.image).attr('alt', response.title+'picture')
+          newCardImageFigure.append(newCardImageActual);
+        newCardImage.append(newCardImageFigure)
+      newCard.append(newCardImage)
+      //body
+        var newCardBody = $('<div>').addClass('card-content');
+          var newCardContent = $('<div>').addClass('content columns is-mobile');
+            //left side
+            var newLeftCol = $('<div>').addClass('column is-half')
+              var newCalories = $('<p>').text('Calories: '+response.nutrition.nutrients[0].amount.toFixed(0)).addClass('subtitle')
+              var newFat = $('<p>').text('Fat: '+response.nutrition.nutrients[1].amount.toFixed(1)+' g').addClass('subtitle')
+              var newCarbs = $('<p>').text('Carbs: '+response.nutrition.nutrients[3].amount.toFixed(1)+' g').addClass('subtitle')
+              var newSugar = $('<p>').text('Sugar: '+response.nutrition.nutrients[5].amount.toFixed(1)+' g').addClass('subtitle')
+              var newProtein = $('<p>').text('Sugar: '+response.nutrition.nutrients[0].amount.toFixed(1)+' g').addClass('subtitle')
+            newLeftCol.append(newCalories, newFat, newCarbs, newSugar, newProtein)
+            //right side
+            var newRightCol = $('<div>').addClass("column is-half")
+              var newIngredientsHeader = $('<p>').addClass('subtitle my-0').html('<u>Ingredients<u>')
+              var ingredientsList = response.nutrition.ingredients.map(el => el.name)
+              var newUnorderedList = $('<ul>').addClass('my-0 mx-1')
+              for (var ing of ingredientsList) {
+                var newListItem = $('<li>').text(ing)
+                newUnorderedList.append(newListItem)
+              }
+            newRightCol.append(newIngredientsHeader, newUnorderedList)
+            newCardContent.append(newLeftCol, newRightCol);
+        newCardBody.append(newCardContent);
+      newCard.append(newCardBody);
+      //footer
+        var newCardFooter = $('<div>').addClass('card-footer');
+          var newRecipeLink = $('<a target="_blank">').addClass('card-footer-item').attr('href', response.sourceUrl).text('See the Recipe');
+        newCardFooter.append(newRecipeLink);
+      newCard.append(newCardFooter);
+    $('#foodGoesHere').append(newCard)
   }
+
+  //test for nutrition block design
+  // $('#main').show()
+  // createNutritionBlock(testResponse.results[0])
+
 
   //function to create buttons after search
   function createSearchButtons() {
     //parse the food block down to just the header
     $("#foodGoesHere").html('<h1 class="title has-text-white searchHeading">Search Results</h1>');
+    //make the nutrition block full width
+    $('#foodGoesHere').removeClass('is-half')
     //for every item in the search results...
     spoonSearchResults.forEach((el, index) => {
       //create a new button
@@ -110,7 +124,6 @@ $(document).ready(function () {
   //Search button listener
   $("#searchButton").on("click", function (event) {
     // Preventing the button from trying to submit the form
-    
     event.preventDefault();
     // Storing the food name
     var inputFood = $("#search").val().trim();
@@ -255,6 +268,7 @@ $(document).ready(function () {
   function buildYelpCards() {
     //show yelp section
     $('#yelpSection').show()
+    $('#foodGoesHere').addClass('is-half')
     //remove all previous yelp results
     $('#yelpSection').children('.card').remove()
     for (let i=0; i < 10; i++) {
