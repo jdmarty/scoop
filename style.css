@@ -4,8 +4,10 @@
 
 .backgroundImg {
     background-image: url("images/noodles.jpg");
-    display: initial;
-    position: absolute;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-position: center;
-    bottom: 0px;
+    background-size: cover;
+    height: 1250px;
+    width: auto;
 }
