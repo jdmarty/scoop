@@ -5,13 +5,14 @@ $(document).ready(function () {
   if (!advancedSearchObj) advancedSearchObj = {};
   var spoonSearchResults;
   var yelpResults;
-  var currentYelpSearchTerm = 'Noodles'
+  var currentYelpSearchTerm = ''
   var currentYelpSearchLocation = JSON.parse(localStorage.getItem('lastYelpLocation'))  
   if (!currentYelpSearchLocation) currentYelpSearchLocation = 'Irvine'     
-
+  var scrollUpBtn = document.getElementById('scrollTop')
+  var scrollContainer = document.getElementsByClassName('scrollUpContainer')
   //initial setup of advanced search parameters from storage
   setAdvancedSearch();
-
+ 
   //Recipe Search
   function getRecipe(query) {
     //get advanced search options to add to the end of the string
@@ -35,7 +36,7 @@ $(document).ready(function () {
   //create function to write nutrition block and call write nutrition function in ajax
   function createNutritionBlock(response) {
     if (response) $("#foodGoesHere").empty();
-    var actualTitle = $("<h1 class='title has-text-white'>").text(
+    var actualTitle = $("<h1 class='title has-text-white actualTitles'>").text(
       response.title
     );
     $("#foodGoesHere").append(actualTitle);
@@ -79,13 +80,13 @@ $(document).ready(function () {
   //function to create buttons after search
   function createSearchButtons() {
     //parse the food block down to just the header
-    $("#foodGoesHere").html('<h1 class="title has-text-white">Search Results</h1>');
+    $("#foodGoesHere").html('<h1 class="title has-text-white searchHeading">Search Results</h1>');
     //for every item in the search results...
     spoonSearchResults.forEach((el, index) => {
       //create a new button
       var newFoodButton = $("<button>")
         //add classes
-        .addClass("box is-inline-block m-2")
+        .addClass("box is-inline-block m-2 is-clickable recipeBtn")
         //give it an index and text to be used for event listener
         .attr("data-index", index)
         .text(el.title)
@@ -109,11 +110,13 @@ $(document).ready(function () {
   //Search button listener
   $("#searchButton").on("click", function (event) {
     // Preventing the button from trying to submit the form
+    
     event.preventDefault();
     // Storing the food name
     var inputFood = $("#search").val().trim();
     //when button is pressed main will appear
-    $("#main").css({"display":"block"}); 
+    $("#main").css({"display":"block"});
+    $("#yelpSection").hide();
     // Running the food function(passing in the food as an argument)
     getRecipe(inputFood);
   });
@@ -250,6 +253,8 @@ $(document).ready(function () {
 
   //function build yelp cards after a yelp call
   function buildYelpCards() {
+    //show yelp section
+    $('#yelpSection').show()
     //remove all previous yelp results
     $('#yelpSection').children('.card').remove()
     for (let i=0; i < 10; i++) {
@@ -291,11 +296,14 @@ $(document).ready(function () {
     e.preventDefault()
     callYelp(currentYelpSearchTerm, $('#yelpLocation').val())
   })
-
-  callYelp(currentYelpSearchTerm, currentYelpSearchLocation)
   //-------------------------------------------------------------------------
 
   //=========================================================================
+  //function to scroll back to top //
+  scrollUpBtn.addEventListener("click", backToTop)
+  function backToTop() {
+    $(window).scrollTop(0);
+  }
 });
 
 
