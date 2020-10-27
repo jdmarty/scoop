@@ -1,5 +1,3 @@
-import {testResponse} from "./ajax.js"
-
 $(document).ready(function () {
   //=======================================================
   //globals

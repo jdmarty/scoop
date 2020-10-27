@@ -80,3 +80,9 @@
 .actualTitles {
     font-family: 'Staatliches', cursive;
 }
+
+/* set height for body so content cant overflow */
+body {
+    height: 100vh;
+    overflow: auto;
+}
