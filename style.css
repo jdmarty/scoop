@@ -11,6 +11,7 @@
     background-size: cover;
     height: 1250px;
     width: auto;
+}
 #scrollTop {
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -41,7 +42,6 @@
 .scrollUpContainer {
     float: right;
 }
-
 
 .recipeBtn {
         box-shadow: 0px 1px 0px 0px #1c1c17;

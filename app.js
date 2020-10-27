@@ -77,10 +77,13 @@ $(document).ready(function () {
     $('#foodGoesHere').append(actualRecipe);
   }
 
+
   //function to create buttons after search
   function createSearchButtons() {
     //parse the food block down to just the header
     $("#foodGoesHere").html('<h1 class="title has-text-white searchHeading">Search Results</h1>');
+    //make the nutrition block full width
+    $('#foodGoesHere').removeClass('is-half')
     //for every item in the search results...
     spoonSearchResults.forEach((el, index) => {
       //create a new button
@@ -255,6 +258,7 @@ $(document).ready(function () {
   function buildYelpCards() {
     //show yelp section
     $('#yelpSection').show()
+    $('#foodGoesHere').addClass('is-half')
     //remove all previous yelp results
     $('#yelpSection').children('.card').remove()
     for (let i=0; i < 10; i++) {
