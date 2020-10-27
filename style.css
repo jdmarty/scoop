@@ -2,6 +2,15 @@
     width: 70px;
 }
 
+
+.backgroundImg {
+    background-image: url("images/noodles.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    height: 1250px;
+    width: auto;
 #scrollTop {
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;

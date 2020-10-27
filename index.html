@@ -15,8 +15,7 @@
     <title>Scoop Project</title>
 </head>
 
-<body>
-
+<body class="backgroundImg">
     <section class="hero is-primary is-bold">
         <div class="hero-body">
             <div class="container">
@@ -215,16 +214,18 @@
                         </div>
                     </div>
                     <button class="button is-danger mx-3 my-2" id="resetAS">Reset Advanced Search</button>
-                <!-- end advanced Search -->
+                    <!-- end advanced Search -->
+                </div>
+                <button id="testAS">Test</button>
             </div>
-            <button id="testAS">Test</button>
-        </div>
     </section>
-    <section style= "display:none" class="section" id="main"> <!--added initial style when page first loads-->
+    <section style="display:none" class="section backgroundImg" id="main">
+        <!--added initial style when page first loads-->
         <div class="container">
             <div class="columns">
                 <!-- Nutrition Section -->
-                <div class="column has-background-primary is-half" id="foodGoesHere"> <!-- food goes here ID added-->
+                <div class="column has-background-primary is-half" id="foodGoesHere">
+                    <!-- food goes here ID added-->
                 </div>
                 <!-- Yelp Section -->
                 <div class="column has-background-danger is-half" id="yelpSection">
@@ -248,10 +249,11 @@
             </div>
     </section>
     <div class=scrollUpContainer>
-    <button id="scrollTop"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M14 8L7.5 1 1 8m13 5.5l-6.5-7-6.5 7" stroke="currentColor" stroke-linecap="square"></path></svg></button>
-</div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="app.js"></script>
+      <button id="scrollTop"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M14 8L7.5 1 1 8m13 5.5l-6.5-7-6.5 7" stroke="currentColor" stroke-linecap="square"></path></svg></button>
+  </div>
+      
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="app.js"></script>
 </body>
 
 </html>
