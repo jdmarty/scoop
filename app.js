@@ -1,5 +1,3 @@
-import {testResponse} from "./ajax.js"
-
 $(document).ready(function () {
   //=======================================================
   //globals
@@ -21,7 +19,7 @@ $(document).ready(function () {
     var advancedOptions = parseAdvancedSearch();
     //query url
     let queryURL =
-      "https://api.spoonacular.com/recipes/complexSearch?apiKey=1679c56d3606492fbf0477a862a3177a&sort=random&addRecipeNutrition=true&query=" 
+      "https://api.spoonacular.com/recipes/complexSearch?apiKey=1679c56d3606492fbf0477a862a3177a&sort=healthiness&addRecipeNutrition=true&query=" 
       + query 
       + advancedOptions;
     //ajax call to find recipes
@@ -39,49 +37,51 @@ $(document).ready(function () {
   //create function to write nutrition block and call write nutrition function in ajax
   function createNutritionBlock(response) {
     if (response) $("#foodGoesHere").empty();
-    var actualTitle = $("<h1 class='title has-text-white actualTitles m-0'>").text(
-      response.title
-    );
+    var actualTitle = $("<h1 class='title has-text-white actualTitles m-0'>").text(response.title);
+    var goBackButton = $('<button>').addClass('button is-inline').text('Back to Results')
+      .on('click', () => {
+        createSearchButtons()
+      })
     $("#foodGoesHere").append(actualTitle);
 
     var newCard = $("<div>").addClass('card my-2');
       //image
-        var newCardImage = $('<div>').addClass('card-image');
-          var newCardImageFigure = $('<figure>').addClass('image is-5by3 m-2')
-           var newCardImageActual = $('<img>').attr('src', response.image).attr('alt', response.title+'picture')
-          newCardImageFigure.append(newCardImageActual);
-        newCardImage.append(newCardImageFigure)
-      newCard.append(newCardImage)
+      var newCardImage = $('<div>').addClass('card-image');
+        var newCardImageFigure = $('<figure>').addClass('image is-5by3 m-2')
+          var newCardImageActual = $('<img>').attr('src', response.image).attr('alt', response.title+'picture')
+        newCardImageFigure.append(newCardImageActual);
+      newCardImage.append(newCardImageFigure)
+    newCard.append(newCardImage)
       //body
-        var newCardBody = $('<div>').addClass('card-content');
-          var newCardContent = $('<div>').addClass('content columns is-mobile');
-            //left side
-            var newLeftCol = $('<div>').addClass('column is-half')
-              var newCalories = $('<p>').text('Calories: '+response.nutrition.nutrients[0].amount.toFixed(0)).addClass('subtitle')
-              var newFat = $('<p>').text('Fat: '+response.nutrition.nutrients[1].amount.toFixed(1)+' g').addClass('subtitle')
-              var newCarbs = $('<p>').text('Carbs: '+response.nutrition.nutrients[3].amount.toFixed(1)+' g').addClass('subtitle')
-              var newSugar = $('<p>').text('Sugar: '+response.nutrition.nutrients[5].amount.toFixed(1)+' g').addClass('subtitle')
-              var newProtein = $('<p>').text('Sugar: '+response.nutrition.nutrients[0].amount.toFixed(1)+' g').addClass('subtitle')
-            newLeftCol.append(newCalories, newFat, newCarbs, newSugar, newProtein)
-            //right side
-            var newRightCol = $('<div>').addClass("column is-half")
-              var newIngredientsHeader = $('<p>').addClass('subtitle my-0').html('<u>Ingredients<u>')
-              var ingredientsList = response.nutrition.ingredients.map(el => el.name)
-              var newUnorderedList = $('<ul>').addClass('my-0 mx-1')
-              for (var ing of ingredientsList) {
-                var newListItem = $('<li>').text(ing)
-                newUnorderedList.append(newListItem)
-              }
-            newRightCol.append(newIngredientsHeader, newUnorderedList)
-            newCardContent.append(newLeftCol, newRightCol);
-        newCardBody.append(newCardContent);
-      newCard.append(newCardBody);
+      var newCardBody = $('<div>').addClass('card-content');
+        var newCardContent = $('<div>').addClass('content columns is-mobile');
+          //left side
+          var newLeftCol = $('<div>').addClass('column is-half')
+            var newCalories = $('<p>').text('Calories: '+response.nutrition.nutrients[0].amount.toFixed(0)).addClass('subtitle')
+            var newFat = $('<p>').text('Fat: '+response.nutrition.nutrients[1].amount.toFixed(1)+' g').addClass('subtitle')
+            var newCarbs = $('<p>').text('Carbs: '+response.nutrition.nutrients[3].amount.toFixed(1)+' g').addClass('subtitle')
+            var newSugar = $('<p>').text('Sugar: '+response.nutrition.nutrients[5].amount.toFixed(1)+' g').addClass('subtitle')
+            var newProtein = $('<p>').text('Sugar: '+response.nutrition.nutrients[0].amount.toFixed(1)+' g').addClass('subtitle')
+          newLeftCol.append(newCalories, newFat, newCarbs, newSugar, newProtein)
+          //right side
+          var newRightCol = $('<div>').addClass("column is-half")
+            var newIngredientsHeader = $('<p>').addClass('subtitle my-0').html('<u>Ingredients<u>')
+            var ingredientsList = response.nutrition.ingredients.map(el => el.name)
+            var newUnorderedList = $('<ul>').addClass('my-0 mx-1')
+            for (var ing of ingredientsList) {
+              var newListItem = $('<li>').text(ing)
+              newUnorderedList.append(newListItem)
+            }
+          newRightCol.append(newIngredientsHeader, newUnorderedList)
+          newCardContent.append(newLeftCol, newRightCol);
+      newCardBody.append(newCardContent);
+    newCard.append(newCardBody);
       //footer
-        var newCardFooter = $('<div>').addClass('card-footer');
-          var newRecipeLink = $('<a target="_blank">').addClass('card-footer-item').attr('href', response.sourceUrl).text('See the Recipe');
-        newCardFooter.append(newRecipeLink);
-      newCard.append(newCardFooter);
-    $('#foodGoesHere').append(newCard)
+      var newCardFooter = $('<div>').addClass('card-footer');
+        var newRecipeLink = $('<a target="_blank">').addClass('card-footer-item').attr('href', response.sourceUrl).text('See the Recipe');
+      newCardFooter.append(newRecipeLink);
+    newCard.append(newCardFooter);
+    $('#foodGoesHere').append(newCard, goBackButton)
   }
 
   //test for nutrition block design
@@ -95,6 +95,8 @@ $(document).ready(function () {
     $("#foodGoesHere").html('<h1 class="title has-text-white searchHeading">Search Results</h1>');
     //make the nutrition block full width
     $('#foodGoesHere').removeClass('is-half')
+    $('#yelpSection').hide()
+    $('body').removeClass('backgroudImg').addClass('backgroundImgStart')
     //for every item in the search results...
     spoonSearchResults.forEach((el, index) => {
       //create a new button
@@ -108,6 +110,7 @@ $(document).ready(function () {
         .on("click", function () {
           createNutritionBlock(spoonSearchResults[$(this).attr("data-index")]);
           currentYelpSearchTerm = $(this).text()
+          $('body').removeClass('backgroundImgStart').addClass('backgroundImg')
           callYelp(currentYelpSearchTerm, currentYelpSearchLocation);
         });
         //append the new button
@@ -240,7 +243,7 @@ $(document).ready(function () {
 
   //test button
   $("#testAS").on("click", function () {
-  
+    createSearchButtons()
   });
 
   //------------------------------------------------------------------
@@ -271,13 +274,14 @@ $(document).ready(function () {
     $('#foodGoesHere').addClass('is-half')
     //remove all previous yelp results
     $('#yelpSection').children('.card').remove()
+    //check if you have any yelp results to work with
     for (let i=0; i < 10; i++) {
       var thisBusiness = yelpResults.businesses[i];
       var newCard = $("<div>").addClass('card my-2');
       //image
         var newCardImage = $('<div>').addClass('card-image');
           var newCardImageFigure = $('<figure>').addClass('image is-5by3 m-2')
-           var newCardImageActual = $('<img>').attr('src', thisBusiness.image_url).attr('alt', thisBusiness.name+'picture')
+            var newCardImageActual = $('<img>').attr('src', thisBusiness.image_url).attr('alt', thisBusiness.name+'picture')
           newCardImageFigure.append(newCardImageActual);
         newCardImage.append(newCardImageFigure)
       newCard.append(newCardImage)
