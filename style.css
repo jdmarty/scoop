@@ -3,13 +3,22 @@
     width: 70px;
 }
 
+.backgroundImgStart {
+    background-image: url("images/noodles.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    width: auto;
+}
+
 .backgroundImg {
     background-image: url("images/noodles.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
-    height: 1250px;
     width: auto;
 }
 
@@ -89,7 +98,7 @@
 }
 
 /* set height for body so content cant overflow */
-body {
+/* body {
     height: 100vh;
     overflow: auto;
-}
+} */
