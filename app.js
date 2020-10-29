@@ -84,7 +84,7 @@ $(document).ready(function () {
       .addClass("subtitle");
     var newProtein = $("<p>")
       .text(
-        "Protein: " + response.nutrition.nutrients[0].amount.toFixed(1) + " g"
+        "Protein: " + response.nutrition.nutrients[8].amount.toFixed(1) + " g"
       )
       .addClass("subtitle");
     newLeftCol.append(newCalories, newFat, newCarbs, newSugar, newProtein);
