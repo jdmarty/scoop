@@ -26,9 +26,9 @@ If time is plentiful and the user would like to prepare their meal, they’ll ha
 
 --- What Nutri Spot Looks Like ---
 
-<img src="images/mainsc.jpg" alt="This is a screenshot of the main page." width="50%" height="50%">
+<img src="images/mainsc.jpg" alt="This is a screenshot of the main page." width="100%" height="100%">
 
-<img src="images/ex.pho.jpg" alt="This is a screenshot of search results for Pho." width="50%" height="50%">
+<img src="images/ex.pho.jpg" alt="This is a screenshot of search results for Pho." width="100%" height="100%">
 
 
 
