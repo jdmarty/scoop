@@ -61,7 +61,7 @@ $(document).ready(function () {
             var newFat = $('<p>').text('Fat: '+response.nutrition.nutrients[1].amount.toFixed(1)+' g').addClass('subtitle')
             var newCarbs = $('<p>').text('Carbs: '+response.nutrition.nutrients[3].amount.toFixed(1)+' g').addClass('subtitle')
             var newSugar = $('<p>').text('Sugar: '+response.nutrition.nutrients[5].amount.toFixed(1)+' g').addClass('subtitle')
-            var newProtein = $('<p>').text('Sugar: '+response.nutrition.nutrients[0].amount.toFixed(1)+' g').addClass('subtitle')
+            var newProtein = $('<p>').text('Protein: '+response.nutrition.nutrients[0].amount.toFixed(1)+' g').addClass('subtitle')
           newLeftCol.append(newCalories, newFat, newCarbs, newSugar, newProtein)
           //right side
           var newRightCol = $('<div>').addClass("column is-half")
