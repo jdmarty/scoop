@@ -3,98 +3,157 @@ $(document).ready(function () {
   //globals
   var advancedSearchObj = JSON.parse(localStorage.getItem("advancedSearch"));
   if (!advancedSearchObj) advancedSearchObj = {};
-  var searchResults;
-  var nutritionInformation;
-  var yelpResults
+  var spoonSearchResults;
+  var yelpResults;
+  var currentYelpSearchTerm = "";
+  var currentYelpSearchLocation = JSON.parse(
+    localStorage.getItem("lastYelpLocation")
+  );
+  if (!currentYelpSearchLocation) currentYelpSearchLocation = "Irvine";
+  var scrollUpBtn = document.getElementById("scrollTop");
 
-  //intialize functions
+  //initial setup of advanced search parameters from storage
   setAdvancedSearch();
 
   //Recipe Search
   function getRecipe(query) {
+    //get advanced search options to add to the end of the string
     var advancedOptions = parseAdvancedSearch();
+    //query url
     let queryURL =
-      "https://api.spoonacular.com/recipes/complexSearch?apiKey=1679c56d3606492fbf0477a862a3177a&sort=random&addRecipeNutrition=true&query=" +
+      "https://api.spoonacular.com/recipes/complexSearch?apiKey=1679c56d3606492fbf0477a862a3177a&sort=healthiness&addRecipeNutrition=true&query=" +
       query +
       advancedOptions;
+    //ajax call to find recipes
     $.ajax({
       url: queryURL,
       method: "GET",
     }).then(function (response) {
-      console.log(response);
-      searchResults = response.results;
-      console.log(searchResults);
-      nutritionInformation = response.results[0];
-      console.log(nutritionInformation);
+      console.log(queryURL);
+      //save the search results and create search buttons
+      spoonSearchResults = response.results;
       createSearchButtons();
-      // createNutritionBlock(nutritionInformation);
     });
   }
 
   //create function to write nutrition block and call write nutrition function in ajax
   function createNutritionBlock(response) {
     if (response) $("#foodGoesHere").empty();
-    var actualTitle = $("<h1 class='title has-text-white'>").text(
-      response.title
-    );
+    //create title and go back button
+    var actualTitle = $(
+      "<h1 class='title has-text-white actualTitles m-0'>"
+    ).text(response.title);
+    var goBackButton = $("<button>")
+      .addClass("button is-inline")
+      .text("Back to Results")
+      .on("click", () => {
+        createSearchButtons();
+      });
     $("#foodGoesHere").append(actualTitle);
 
-    var foodImageDiv = $("<div class='food'>");
-    var actualFoodImage = $("<img>").attr("src", response.image);
-    foodImageDiv.append(actualFoodImage);
-    $("#foodGoesHere").append(foodImageDiv);
-
-    var actualCalories = $("<h1 class='subtitle has-text-white'>").text(
-      "Calories: " + response.nutrition.nutrients[0].amount + "cal"
-    );
-    $("#foodGoesHere").append(actualCalories);
-
-    var actualFat = $("<h1 class='subtitle has-text-white'>").text(
-      "Fat: " + response.nutrition.nutrients[1].amount + "g"
-    );
-    $("#foodGoesHere").append(actualFat);
-
-    var actualCarbs = $("<h1 class='subtitle has-text-white'>").text(
-      "Carbs: " + response.nutrition.nutrients[3].amount + "g"
-    );
-    $("#foodGoesHere").append(actualCarbs);
-
-    var actualSugar = $("<h1 class='subtitle has-text-white'>").text(
-      "Sugar: " + response.nutrition.nutrients[5].amount + "g"
-    );
-    $("#foodGoesHere").append(actualSugar);
-
-    var actualProtein = $("<h1 class='subtitle has-text-white'>").text(
-      "Protein: " + response.nutrition.nutrients[9].amount + "g"
-    );
-
-    var actualRecipe = $('<a>').attr("href", response.sourceUrl[0]).text(`{response.sourceUrl}`)
-    console.log(actualRecipe);
-   
-    $("#foodGoesHere").append(actualProtein);
-    $('#foodGoesHere').append(actualRecipe);
+    var newCard = $("<div>").addClass("card my-2");
+    //image
+    var newCardImage = $("<div>").addClass("card-image");
+    var newCardImageFigure = $("<figure>").addClass("image is-5by3 m-2");
+    var newCardImageActual = $("<img>")
+      .attr("src", response.image)
+      .attr("alt", response.title + "picture");
+    newCardImageFigure.append(newCardImageActual);
+    newCardImage.append(newCardImageFigure);
+    newCard.append(newCardImage);
+    //body
+    var newCardBody = $("<div>").addClass("card-content");
+    var newCardContent = $("<div>").addClass("content columns is-mobile");
+    //left side
+    var newLeftCol = $("<div>").addClass("column is-half");
+    var newCalories = $("<p>")
+      .text("Calories: " + response.nutrition.nutrients[0].amount.toFixed(0))
+      .addClass("subtitle");
+    var newFat = $("<p>")
+      .text("Fat: " + response.nutrition.nutrients[1].amount.toFixed(1) + " g")
+      .addClass("subtitle");
+    var newCarbs = $("<p>")
+      .text(
+        "Carbs: " + response.nutrition.nutrients[3].amount.toFixed(1) + " g"
+      )
+      .addClass("subtitle");
+    var newSugar = $("<p>")
+      .text(
+        "Sugar: " + response.nutrition.nutrients[5].amount.toFixed(1) + " g"
+      )
+      .addClass("subtitle");
+    var newProtein = $("<p>")
+      .text(
+        "Protein: " + response.nutrition.nutrients[0].amount.toFixed(1) + " g"
+      )
+      .addClass("subtitle");
+    newLeftCol.append(newCalories, newFat, newCarbs, newSugar, newProtein);
+    //right side
+    var newRightCol = $("<div>").addClass("column is-half");
+    var newIngredientsHeader = $("<p>")
+      .addClass("subtitle my-0")
+      .html("<u>Ingredients<u>");
+    var ingredientsList = response.nutrition.ingredients.map((el) => el.name);
+    var newUnorderedList = $("<ul>").addClass("my-0 mx-1");
+    for (var ing of ingredientsList) {
+      var newListItem = $("<li>").text(ing);
+      newUnorderedList.append(newListItem);
+    }
+    newRightCol.append(newIngredientsHeader, newUnorderedList);
+    newCardContent.append(newLeftCol, newRightCol);
+    newCardBody.append(newCardContent);
+    newCard.append(newCardBody);
+    //footer
+    var newCardFooter = $("<div>").addClass("card-footer");
+    var newRecipeLink = $('<a target="_blank">')
+      .addClass("card-footer-item")
+      .attr("href", response.sourceUrl)
+      .text("See the Recipe");
+    newCardFooter.append(newRecipeLink);
+    newCard.append(newCardFooter);
+    $("#foodGoesHere").append(newCard, goBackButton);
   }
 
   //function to create buttons after search
   function createSearchButtons() {
-    $("#foodGoesHere")
-      .empty()
-      .append('<h1 class="title has-text-white">Search Results</h1>');
-    searchResults.forEach((el, index) => {
+    //parse the food block down to just the header
+    $("#foodGoesHere").html(
+      '<h1 class="title has-text-white searchHeading">Search Results</h1>'
+    );
+    //make the nutrition block full width nad reset the background image
+    $("#foodGoesHere").removeClass("is-half");
+    $("#yelpSection").hide();
+    $("body").removeClass("backgroudImg").addClass("backgroundImgStart");
+    $("#scrollTop").show();
+    //for every item in the search results...
+    spoonSearchResults.forEach(function (el, index) {
+      //create a new button
       var newFoodButton = $("<button>")
-        .addClass("button m-2")
+        //add classes
+        .addClass("box is-inline-block m-2 is-clickable recipeBtn")
+        //give it an index and text to be used for event listener
         .attr("data-index", index)
         .text(el.title)
+        //when one of these buttons is clicked...
         .on("click", function () {
-          createNutritionBlock(searchResults[$(this).attr("data-index")]);
-          callYelp($(this).text());
+          //create a nutrition block from the item at the corresponding index
+          createNutritionBlock(spoonSearchResults[$(this).attr("data-index")]);
+          //set the yelp term to the test of the button
+          currentYelpSearchTerm = $(this).text();
+          //change the background image to the scrollable version
+          $("body").removeClass("backgroundImgStart").addClass("backgroundImg");
+          //call yelp
+          callYelp(currentYelpSearchTerm, currentYelpSearchLocation);
         });
+      //append the new button
       $("#foodGoesHere").append(newFoodButton);
     });
-    if (searchResults.length === 0)
-      $("#foodGoesHere").append(
+    //if there are no search results, display message
+    if (spoonSearchResults.length === 0) {
+      $("#foodGoesHere").html(
         '<h1 class="subtitle has-text-white">Oops! No results found</h1>'
       );
+    }
   }
 
   //Search button listener
@@ -103,17 +162,19 @@ $(document).ready(function () {
     event.preventDefault();
     // Storing the food name
     var inputFood = $("#search").val().trim();
-    //when button is pressed main will appear
-    $("#main").css({"display":"block"}); 
+    //when button is pressed main will appear nad the yelp results will be hidden
+    $("#main").css({ display: "block" });
+    $("#yelpSection").hide();
     // Running the food function(passing in the food as an argument)
     getRecipe(inputFood);
   });
 
   //ADVANCED SEARCH --------------------------------------------------
-  $("#advancedSearchBox").hide();
 
   //function to parse the object in storage to display the advanced search
   function setAdvancedSearch() {
+    //hide the advanced search
+    $("#advancedSearchBox").hide();
     //set slider displays
     $("#calRange").val(advancedSearchObj.maxCalories);
     $("#calDisplay").text(advancedSearchObj.maxCalories);
@@ -212,78 +273,103 @@ $(document).ready(function () {
   $("#resetAS").on("click", function () {
     resetAS();
   });
-
-  //test button
-  $("#testAS").on("click", function () {
-    $("#foodGoesHere")
-      .empty()
-      .append('<h1 class="title has-text-white">Search Results</h1>');
-    var array = [
-      "item1",
-      "item 2",
-      "item 3",
-      "item 2",
-      "item 3",
-      "item 2",
-      "item 3",
-      "item 2",
-      "item 3",
-    ];
-    array.forEach((el) => {
-      $("#foodGoesHere").append(`<button class="button m-2">${el}</button>`);
-    });
-  });
-
   //------------------------------------------------------------------
 
-  function callYelp(term) {
+  //Yelp API------------------------------------------------------------
+  function callYelp(term, location) {
     var APIkey =
       "Zc1zDKlQCxvJizw2y9oacMLa-ZU3dxlgJXxJsLDW3gR_zIdEa_7s1ffPqODwIt2tIS-YcIwPRSjzqx380E0GwCc90WrQJ8yvF-M52zNKSj20fUEPycHfNuGxZNI5X3Yx";
-    var yelpQueryURL = `https://proxy-for-scoop.herokuapp.com/http://api.yelp.com/v3/businesses/search?term=${term}&location=Irvine`;
+    var yelpQueryURL = `https://proxy-for-scoop.herokuapp.com/http://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`;
 
     $.ajax({
       url: yelpQueryURL,
       method: "GET",
       headers: { Authorization: "Bearer " + APIkey },
     }).then(function (response) {
-      console.log(response);
-      yelpResults = response
-      buildYelpCards()
+      yelpResults = response;
+      currentYelpSearchLocation = location;
+      localStorage.setItem(
+        "lastYelpLocation",
+        JSON.stringify(currentYelpSearchLocation)
+      );
+      buildYelpCards();
     });
   }
 
+  //function build yelp cards after a yelp call
   function buildYelpCards() {
-    $('#yelpSection').empty().append('<h1 class="title has-text-white">Yelp Results</h1>')
-    for (let i=0; i < 10; i++) {
+    //show yelp section
+    $("#yelpSection").show();
+    $("#foodGoesHere").addClass("is-half");
+    //remove all previous yelp results
+    $("#yelpSection").children(".card").remove();
+    //check if you have any yelp results to work with
+    if (yelpResults.businesses.length < 1) {
+      $("#yelpSection").append(
+        `<div class="card subtitle">No yelp results in ${currentYelpSearchLocation}</div>`
+      );
+    }
+    //otherwise, loop through the first ten business results
+    for (let i = 0; i < 10; i++) {
       var thisBusiness = yelpResults.businesses[i];
-      var newCard = $("<div>").addClass('card my-2');
+      var newCard = $("<div>").addClass("card my-2");
+      //image
+      var newCardImage = $("<div>").addClass("card-image");
+      var newCardImageFigure = $("<figure>").addClass("image is-5by3 m-2");
+      var newCardImageActual = $("<img>")
+        .attr("src", thisBusiness.image_url)
+        .attr("alt", thisBusiness.name + "picture");
+      newCardImageFigure.append(newCardImageActual);
+      newCardImage.append(newCardImageFigure);
+      newCard.append(newCardImage);
       //header
-        var newCardHeader = $('<header>').addClass('class-header');
-          var newHeaderTitle = $('<p>').addClass('card-header-title').text(thisBusiness.name);
-        newCardHeader.append(newHeaderTitle)
-      newCard.append(newCardHeader)  
+      var newCardHeader = $("<header>").addClass("class-header");
+      var newHeaderTitle = $("<p>")
+        .addClass("card-header-title")
+        .text(thisBusiness.name);
+      newCardHeader.append(newHeaderTitle);
+      newCard.append(newCardHeader);
       //body
-        var newCardBody = $('<div>').addClass('card-content');
-          var newCardContent = $('<div>').addClass('content');
-            var newPrice = $('<p>').text('Price: '+thisBusiness.price);
-            var newRating = $('<p>').text('Rating: '+thisBusiness.rating);
-            var newAddress = $('<p>').text(thisBusiness.location.display_address.join(' '));
-            // var newIsOpen = $('<p>').text('Open'thisBusiness.is_closed);
-          newCardContent.append(newPrice, newRating, newAddress);
-        newCardBody.append(newCardContent);
+      var newCardBody = $("<div>").addClass("card-content pt-0");
+      var newCardContent = $("<div>").addClass("content");
+      var newRating = $("<span>")
+        .text("Rating: " + thisBusiness.rating)
+        .addClass("mr-3");
+      var newPrice = $("<span>").text("Price: " + thisBusiness.price);
+      var newAddress = $("<p>").text(
+        thisBusiness.location.display_address.join(" ")
+      );
+      var newDelivery = $("<p>").text(
+        `Order Options: ${thisBusiness.transactions.join(", ")}`
+      );
+      newCardContent.append(newRating, newPrice, newAddress, newDelivery);
+      newCardBody.append(newCardContent);
       newCard.append(newCardBody);
       //footer
-        var newCardFooter = $('<div>').addClass('card-footer');
-          var newYelpLink = $('<a>').addClass('card-footer-item').attr('href', thisBusiness.url).text('Check it out on Yelp');
-        newCardFooter.append(newYelpLink);
+      var newCardFooter = $("<div>").addClass("card-footer");
+      var newYelpLink = $('<a target="_blank">')
+        .addClass("card-footer-item")
+        .attr("href", thisBusiness.url)
+        .text("Check it out on Yelp!");
+      newCardFooter.append(newYelpLink);
       newCard.append(newCardFooter);
-      
-      
-      $('#yelpSection').append(newCard)
+      $("#yelpSection").append(newCard);
     }
   }
 
+  //function to search a new location with the yelp search
+  $("#yelpSearch").on("click", function (e) {
+    e.preventDefault();
+    callYelp(currentYelpSearchTerm, $("#yelpLocation").val());
+  });
+  //-------------------------------------------------------------------------
+
+  //function to scroll back to top //
+  scrollUpBtn.addEventListener("click", backToTop);
+  function backToTop() {
+    $(window).scrollTop(0);
+  }
   //=========================================================================
 });
 
-// Yelp API call below:
+
