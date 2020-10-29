@@ -124,6 +124,7 @@ $(document).ready(function () {
     $("#foodGoesHere").removeClass("is-half");
     $("#yelpSection").hide();
     $("body").removeClass("backgroudImg").addClass("backgroundImgStart");
+    $("#scrollTop").show();
     //for every item in the search results...
     spoonSearchResults.forEach(function (el, index) {
       //create a new button
