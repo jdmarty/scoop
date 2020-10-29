@@ -10,9 +10,12 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <!-- Fontawesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+    <!-- Additional styling -->
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
-    <title>Scoop Project</title>
+    <!-- Icon -->
+    <link rel="icon" href="images/leaf.png">
+    <title>Welcome to NutriSpot!</title>
 </head>
 
 <body class="backgroundImgStart">
@@ -20,7 +23,7 @@
         <div class="hero-body">
             <div class="container">
                 <!-- main search -->
-                <h1 class="title is-size-1 eatHeading">Let's Eat!</h1>
+                <h1 class="title is-size-1 eatHeading">Let's Eat Healthy!</h1>
                 <div class="field has-addons">
                     <div class="control">
                         <div class="button is rounded" id="advancedMenuToggle">
@@ -75,7 +78,7 @@
                             </div>
                             <!-- Allergies Options -->
                             <div class="control is-expanded">
-                                <div class="field box pb-0 pt-1 is-grouped is-grouped-multiline">
+                                <div class="field box pb-0 pt-1 is-grouped is-grouped-multiline allergiesBox">
                                     <p class="control">
                                         <label class="checkbox">
                                         <input type="checkbox" data-allergy="dairy">
@@ -159,7 +162,7 @@
                                 <input class="input is-rounded" id="calRange" type="range" min="50" max="800" data-slider="maxCalories">
                             </div>
                             <div class="control">
-                                <div class="button is-static">
+                                <div class="button is-static asDisplay">
                                     <p id="calDisplay" data-display="maxCalories">___</p>
                                 </div>
                             </div>
@@ -175,7 +178,7 @@
                                 <input class="input is-rounded is-primary" id="protRange" type="range" min="10" max="100" data-slider="maxProtein">
                             </div>
                             <div class="control">
-                                <div class="button is-static">
+                                <div class="button is-static asDisplay">
                                     <p id="protDisplay" data-display='maxProtein'>___</p>
                                 </div>
                             </div>
@@ -191,7 +194,7 @@
                                 <input class="input is-rounded is-primary" id="carbsRange" type="range" min="10" max="100" data-slider="maxCarbs">
                             </div>
                             <div class="control">
-                                <div class="button is-static">
+                                <div class="button is-static asDisplay">
                                     <p id="carbsDisplay" data-display="maxCarbs">___</p>
                                 </div>
                             </div>
@@ -207,7 +210,7 @@
                                 <input class="input is-rounded is-primary" id="sugarRange" type="range" min="0" max="100" data-slider="maxSugar">
                             </div>
                             <div class="control">
-                                <div class="button is-static">
+                                <div class="button is-static asDisplay">
                                     <p id="sugarDisplay" data-display="maxSugar">___</p>
                                 </div>
                             </div>
@@ -223,11 +226,11 @@
         <div class="container ">
             <div class="columns">
                 <!-- Nutrition Section -->
-                <div class="column has-background-primary is-half" id="foodGoesHere">
+                <article class="column has-background-primary is-half" id="foodGoesHere">
                     <!-- food goes here ID added-->
-                </div>
+                </article>
                 <!-- Yelp Section -->
-                <div class="column has-background-danger is-half" id="yelpSection">
+                <article class="column has-background-danger is-half" id="yelpSection">
                     <!-- Header -->
                     <h1 class="subtitle my-1 has-text-white">Find this recipe near:</h1>
                     <!-- Input Form -->
@@ -244,7 +247,7 @@
                             <input class="button is-rounded" id="yelpSearch" type="submit" value="Search">
                         </div>
                     </div>
-                </div>
+                </article>
             </div>
     </section>
     <div class=scrollUpContainer>
