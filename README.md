@@ -23,6 +23,12 @@ Nutri Spot incorporates Spoonacular’s API to search for healthy food, their nu
 If time is plentiful and the user would like to prepare their meal, they’ll have a list of items needed to do so. If time is limited, they’ll know who to call, and where to depart to.
 
 
+--How To Use---
+- Search a simple type of food (eg pizza, noodles, chicken, etc) in the search bar at the top of the page
+- Select one of the buttons that populate below the search bar to see nutritional information and yelp results for that recipe
+- Click "Back to Results" to go back to the original search
+- Before running a search, click the menu button on the left side of the search bar to see and set advanced search terms
+NOTE: this will restrict your searches and may results in a limited number of results
 
 --- What Nutri Spot Looks Like ---
 
